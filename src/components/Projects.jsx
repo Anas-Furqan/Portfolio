@@ -5,7 +5,7 @@ import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 const projects = [
   {
     title: 'Nail Art',
-    description: 'A full-stack Laravel + React-based app to manage customer ledgers, generate bills, and track outstanding dues.',
+    description: 'A responsive and elegant landing page for a nail art studio, crafted with HTML, CSS, and vanilla JavaScript.',
     tech: ['HTML', 'CSS', 'JavaScript'],
     image: './projects/nail-art.PNG',
     github: 'https://github.com/Anas-Furqan/Nail-Art',
