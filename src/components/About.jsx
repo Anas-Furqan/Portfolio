@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="bg-gray-900 text-white py-20 px-4"
+      className="bg-gray-950 text-white py-20 px-4"
     >
       <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
         {/* Left: Text Content */}
@@ -42,7 +42,7 @@ export default function About() {
           className="md:w-1/2 flex justify-center"
         >
           <img
-            src="/pic2.png" 
+            src="/pic2.jpg" 
             alt="Anas Furqan"
             className="w-60 h-60 object-cover rounded-2xl shadow-lg border-2 border-blue-600"
           />

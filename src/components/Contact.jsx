@@ -72,14 +72,14 @@ export default function Contact() {
 
             <div className="flex items-center gap-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/Anas-Furqan"
                 target="_blank"
                 className="hover:text-white text-gray-400 flex items-center gap-2"
               >
                 <FaGithub /> GitHub
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://www.linkedin.com/in/anas-furqan/"
                 target="_blank"
                 className="hover:text-white text-gray-400 flex items-center gap-2"
               >
