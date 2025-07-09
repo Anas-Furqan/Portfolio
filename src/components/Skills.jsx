@@ -5,7 +5,7 @@ import {
   FaGitAlt, FaGithub, FaBootstrap, FaWordpress
 } from 'react-icons/fa';
 
-import { SiJquery, SiInertia, SiDotnet } from 'react-icons/si';
+import { SiJquery, SiInertia, SiDotnet, SiMysql } from 'react-icons/si';
 
 
 export default function Skills() {
@@ -22,6 +22,7 @@ export default function Skills() {
       { name: 'PHP', icon: <FaPhp /> },
       { name: 'Laravel', icon: <FaLaravel /> },
       { name: 'ASP.NET', icon: <SiDotnet /> },
+      { name: 'MySQL', icon: <SiMysql /> },
     ],
     Tools: [
       { name: 'Git', icon: <FaGitAlt /> },

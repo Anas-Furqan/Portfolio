@@ -22,9 +22,25 @@ const allProjects = [
   {
     title: 'Cloth Inventory Management',
     description: 'A full-stack Laravel + React-based app to manage customer ledgers, generate bills, and track outstanding dues.',
-    tech: ['PHP', 'Laravel', 'React.js', 'Inertia.js'],
+    tech: ['PHP', 'Laravel', 'React.js', 'Inertia.js',  'MySQL'],
     image: '/projects/khata-app.PNG',
     github: 'https://github.com/Anas-Furqan/khata-app',
+    demo: '#',
+  },
+  {
+    title: 'Decor Vista',
+    description: 'A full-stack eCommerce web application for a home decor brand, built with Laravel featuring dynamic product management, cart, and checkout functionality.',
+    tech: ['PHP', 'Laravel', 'Bootstrap', 'HTML', 'CSS', 'JavaScript', 'MySQL'],
+    image: '/projects/decorvista.PNG',
+    github: 'https://github.com/Anas-Furqan/DecorVIsta',
+    demo: '#',
+  },
+  {
+    title: 'The Book',
+    description: 'A Laravel-based platform where authors can register and publish their books, featuring secure authentication and dynamic content management.',
+    tech: ['PHP', 'Laravel', 'Bootstrap', 'HTML', 'CSS', 'JavaScript', 'MySQL'],
+    image: '/projects/thebook.PNG',
+    github: 'https://github.com/Anas-Furqan/TheBook',
     demo: '#',
   },
 ];
