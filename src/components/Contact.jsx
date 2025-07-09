@@ -40,7 +40,6 @@ export default function Contact() {
             {/* Hidden fields */}
             <input type="hidden" name="_captcha" value="true" />
             <input type="hidden" name="_template" value="box" />
-            <input type="hidden" name="_next" value="https://portfolio-anasfurqan.vercel.app/thank-you" />
             <input type="hidden" name="_subject" value="New Portfolio Contact!" />
 
             <div>
