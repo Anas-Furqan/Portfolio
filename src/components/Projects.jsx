@@ -43,6 +43,14 @@ const allProjects = [
     github: 'https://github.com/Anas-Furqan/TheBook',
     demo: '#',
   },
+  {
+    title: 'Plant Nest',
+    description: 'A Laravel-powered eCommerce platform dedicated to selling plants and related accessories, offering seamless browsing, cart, and checkout experience.',
+    tech: ['PHP', 'Laravel', 'Bootstrap', 'HTML', 'CSS', 'JavaScript', 'MySQL'],
+    image: '/projects/plantnest.PNG',
+    github: 'https://github.com/Anas-Furqan/PlantNest',
+    demo: '#',
+  },
 ];
 
 const uniqueTechs = [...new Set(allProjects.flatMap(p => p.tech))];
