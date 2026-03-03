@@ -15,7 +15,7 @@ export default function Navbar({ isDark, setIsDark }) {
   }, []);
 
   const navItems = [
-    { href: '#home', label: 'Commit Check' },
+    { href: '#home', label: 'Home' },
     { href: '#about', label: 'About' },
     { href: '#skills', label: 'Skills' },
     { href: '#projects', label: 'Projects' },
