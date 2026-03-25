@@ -1,174 +1,130 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiMail, FiHeart, FiArrowUp } from 'react-icons/fi';
+import { useState, useEffect, useCallback } from 'react';
+import { FiArrowUp, FiHeart } from 'react-icons/fi';
+import { footerSocialLinks, quickLinks } from '../data/content';
 
 export default function Footer() {
-  const scrollToTop = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const socialLinks = [
-    {
-      icon: FiGithub,
-      href: 'https://github.com/Anas-Furqan',
-      label: 'GitHub'
-    },
-    {
-      icon: FiLinkedin,
-      href: 'https://www.linkedin.com/in/anas-furqan/',
-      label: 'LinkedIn'
-    },
-    {
-      icon: FiMail,
-      href: 'mailto:anasfurqan643@gmail.com',
-      label: 'Email'
-    }
-  ];
-
-  const quickLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' }
-  ];
+  }, []);
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-black text-gray-700 dark:text-gray-300 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-30" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-      }}></div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+    <footer className="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div className="section-container py-12 lg:py-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Brand Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="md:col-span-2"
-          >
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Anas Furqan
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              A passionate full-stack developer dedicated to creating innovative web solutions 
-              and bringing digital ideas to life through clean, efficient code and beautiful design.
+          <div className="sm:col-span-2 lg:col-span-2">
+            <a href="#home" className="inline-flex items-center gap-1 mb-4">
+              <span className="text-xl font-bold text-gray-900 dark:text-white">
+                Anas
+              </span>
+              <span className="text-xl font-bold text-blue-600">.</span>
+            </a>
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+              A passionate full-stack developer dedicated to creating innovative
+              web solutions and bringing digital ideas to life through clean,
+              efficient code and beautiful design.
             </p>
-            
+
             {/* Social Links */}
-            <div className="flex space-x-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
+            <div className="flex gap-3">
+              {footerSocialLinks.map((social) => (
+                <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="p-3 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-full text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white hover:bg-white/30 dark:hover:bg-white/20 transition-all duration-300 border border-gray-200/50 dark:border-white/10"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="p-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                  aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
-                </motion.a>
+                </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <h4 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">Quick Links</h4>
+          <div>
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  viewport={{ once: true }}
-                >
+              {quickLinks.map((link) => (
+                <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                   >
                     {link.name}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <h4 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">Contact</h4>
+          <div>
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+              Contact
+            </h4>
             <div className="space-y-3">
-              <p className="text-gray-600 dark:text-gray-400">
-                <span className="text-gray-900 dark:text-white font-medium">Email:</span><br />
-                anasfurqan643@gmail.com
-              </p>
-              <p className="text-gray-600 dark:text-gray-400">
-                <span className="text-gray-900 dark:text-white font-medium">Location:</span><br />
-                Pakistan
-              </p>
-              <p className="text-gray-600 dark:text-gray-400">
-                <span className="text-gray-900 dark:text-white font-medium">Available:</span><br />
-                For freelance work
-              </p>
+              <div>
+                <p className="text-xs text-gray-500 dark:text-gray-500">Email</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  anasfurqan643@gmail.com
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 dark:text-gray-500">Location</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Pakistan</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 dark:text-gray-500">Availability</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Open for freelance
+                </p>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
-        >
-          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
-            <span>© {new Date().getFullYear()} Anas Furqan. All rights reserved.</span>
-            <FiHeart className="w-4 h-4 text-red-500 animate-pulse" />
+        <div className="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+            <span>&copy; {new Date().getFullYear()} Anas Furqan.</span>
+            <span className="hidden sm:inline">All rights reserved.</span>
+          </p>
+
+          <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <span>Built with</span>
+            <FiHeart className="w-4 h-4 text-red-500" />
+            <span>using React & Tailwind</span>
           </div>
-          
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600 dark:text-gray-400 text-sm">Made with</span>
-            <div className="flex space-x-2">
-              <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">React</span>
-              <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">Tailwind</span>
-              <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Framer</span>
-            </div>
-          </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll to Top Button */}
-      <motion.button
+      <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-50"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 1 }}
-        whileHover={{ scale: 1.1, y: -2 }}
-        whileTap={{ scale: 0.9 }}
+        className={`fixed bottom-6 right-6 p-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full shadow-lg transition-all duration-300 z-50 hover:scale-110 ${
+          showScrollTop
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+        aria-label="Scroll to top"
       >
         <FiArrowUp className="w-5 h-5" />
-      </motion.button>
+      </button>
     </footer>
   );
 }

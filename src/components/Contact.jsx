@@ -1,229 +1,187 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiMail, FiMessageSquare, FiSend, FiUser, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiSend, FiUser, FiMail, FiMessageSquare } from 'react-icons/fi';
 import toast, { Toaster } from 'react-hot-toast';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { contactInfo, contactSocialLinks } from '../data/content';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function Contact() {
   const recaptchaRef = useRef(null);
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
-  const [focusedField, setFocusedField] = useState('');
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!captchaVerified) {
       toast.error('Please verify reCAPTCHA!');
       return;
     }
-    
+
+    setIsSubmitting(true);
+
     // Simulate form submission
-    toast.success('Message sent successfully! I\'ll get back to you soon.');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    toast.success("Message sent successfully! I'll get back to you soon.");
     setFormData({ name: '', email: '', subject: '', message: '' });
     setCaptchaVerified(false);
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
+    recaptchaRef.current?.reset();
+    setIsSubmitting(false);
   };
 
-  const contactInfo = [
-    {
-      icon: FiMail,
-      label: 'Email',
-      value: 'anasfurqan643@gmail.com',
-      href: 'mailto:anasfurqan643@gmail.com'
-    },
-    {
-      icon: FiPhone,
-      label: 'Phone',
-      value: '+92 317 4724801',
-      href: 'tel:+923174724801'
-    },
-    {
-      icon: FiMapPin,
-      label: 'Location',
-      value: 'Pakistan',
-      href: '#'
-    }
-  ];
-
-  const socialLinks = [
-    {
-      icon: FiGithub,
-      label: 'GitHub',
-      href: 'https://github.com/Anas-Furqan',
-      color: 'hover:text-gray-900 dark:hover:text-white'
-    },
-    {
-      icon: FiLinkedin,
-      label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/anas-furqan/',
-      color: 'hover:text-blue-600'
-    },
-    {
-      icon: FiMessageSquare,
-      label: 'WhatsApp',
-      href: 'https://wa.me/+923174724801',
-      color: 'hover:text-green-600'
-    }
-  ];
-
   return (
-    <section id="contact" className="relative py-20 px-6 overflow-hidden">
-      <Toaster 
-        position="top-right" 
-        reverseOrder={false}
+    <section id="contact" className="relative py-20 lg:py-32 overflow-hidden">
+      <Toaster
+        position="top-right"
         toastOptions={{
+          className: 'text-sm',
           style: {
-            background: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            color: '#1f2937',
+            background: 'var(--toast-bg, #fff)',
+            color: 'var(--toast-color, #1f2937)',
           },
         }}
       />
 
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800"></div>
-      <div className="absolute top-20 left-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
+      {/* Background */}
+      <div className="absolute inset-0 bg-gray-50 dark:bg-gray-900/50" />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 section-container">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.5 }}
+          variants={fadeInUp}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
-            Get In Touch
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-800 dark:from-white dark:to-blue-200 bg-clip-text text-transparent">
-            Let's Work Together
+          <span className="badge badge-primary mb-4">Get In Touch</span>
+          <h2 className="section-title mb-4">
+            <span className="text-gray-900 dark:text-white">Let's Work </span>
+            <span className="gradient-text">Together</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Ready to bring your ideas to life? I'm here to help you create something amazing.
+          <p className="section-subtitle">
+            Ready to bring your ideas to life? I'm here to help you create
+            something amazing.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={fadeInUp}
           >
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-white/20 dark:border-gray-700/20 shadow-xl">
-              <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">
+            <div className="glass-card p-6 lg:p-8">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
                 Send me a message
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
-                <div className="relative">
-                  <div className="relative">
-                    <FiUser className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
-                      focusedField === 'name' ? 'text-blue-600' : 'text-gray-400'
-                    }`} />
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('name')}
-                      onBlur={() => setFocusedField('')}
-                      required
-                      className="w-full pl-12 pr-4 py-4 bg-white/60 dark:bg-gray-700/60 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none transition-all duration-300 text-gray-900 dark:text-white placeholder-transparent peer"
-                      placeholder="Your Name"
-                    />
-                    <label className="absolute left-12 top-4 text-gray-500 dark:text-gray-400 transition-all duration-200 peer-focus:-top-2 peer-focus:left-4 peer-focus:text-blue-600 peer-focus:text-sm peer-valid:-top-2 peer-valid:left-4 peer-valid:text-sm peer-valid:text-blue-600">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
                       Your Name
                     </label>
+                    <div className="relative">
+                      <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="input-field pl-10"
+                        placeholder="John Doe"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Email Field */}
-                <div className="relative">
-                  <div className="relative">
-                    <FiMail className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
-                      focusedField === 'email' ? 'text-blue-600' : 'text-gray-400'
-                    }`} />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('email')}
-                      onBlur={() => setFocusedField('')}
-                      required
-                      className="w-full pl-12 pr-4 py-4 bg-white/60 dark:bg-gray-700/60 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none transition-all duration-300 text-gray-900 dark:text-white placeholder-transparent peer"
-                      placeholder="Your Email"
-                    />
-                    <label className="absolute left-12 top-4 text-gray-500 dark:text-gray-400 transition-all duration-200 peer-focus:-top-2 peer-focus:left-4 peer-focus:text-blue-600 peer-focus:text-sm peer-valid:-top-2 peer-valid:left-4 peer-valid:text-sm peer-valid:text-blue-600">
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
                       Your Email
                     </label>
+                    <div className="relative">
+                      <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="input-field pl-10"
+                        placeholder="john@example.com"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Subject Field */}
-                <div className="relative">
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
+                    Subject
+                  </label>
                   <div className="relative">
-                    <FiMessageSquare className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-200 ${
-                      focusedField === 'subject' ? 'text-blue-600' : 'text-gray-400'
-                    }`} />
+                    <FiMessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                       type="text"
+                      id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField('subject')}
-                      onBlur={() => setFocusedField('')}
                       required
-                      className="w-full pl-12 pr-4 py-4 bg-white/60 dark:bg-gray-700/60 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none transition-all duration-300 text-gray-900 dark:text-white placeholder-transparent peer"
-                      placeholder="Subject"
+                      className="input-field pl-10"
+                      placeholder="Project inquiry"
                     />
-                    <label className="absolute left-12 top-4 text-gray-500 dark:text-gray-400 transition-all duration-200 peer-focus:-top-2 peer-focus:left-4 peer-focus:text-blue-600 peer-focus:text-sm peer-valid:-top-2 peer-valid:left-4 peer-valid:text-sm peer-valid:text-blue-600">
-                      Subject
-                    </label>
                   </div>
                 </div>
 
-                {/* Message Field */}
-                <div className="relative">
-                  <div className="relative">
-                    <FiMessageSquare className={`absolute left-4 top-6 w-5 h-5 transition-colors duration-200 ${
-                      focusedField === 'message' ? 'text-blue-600' : 'text-gray-400'
-                    }`} />
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('message')}
-                      onBlur={() => setFocusedField('')}
-                      rows="4"
-                      required
-                      className="w-full pl-12 pr-4 py-4 bg-white/60 dark:bg-gray-700/60 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none transition-all duration-300 text-gray-900 dark:text-white placeholder-transparent peer resize-none"
-                      placeholder="Your Message"
-                    />
-                    <label className="absolute left-12 top-4 text-gray-500 dark:text-gray-400 transition-all duration-200 peer-focus:-top-2 peer-focus:left-4 peer-focus:text-blue-600 peer-focus:text-sm peer-valid:-top-2 peer-valid:left-4 peer-valid:text-sm peer-valid:text-blue-600">
-                      Your Message
-                    </label>
-                  </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows="4"
+                    required
+                    className="input-field resize-none"
+                    placeholder="Tell me about your project..."
+                  />
                 </div>
 
                 {/* reCAPTCHA */}
@@ -236,86 +194,86 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Submit Button */}
-                <motion.button
+                <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className="w-full btn-primary py-3.5 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <FiSend className="w-5 h-5" />
-                  Send Message
-                </motion.button>
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <FiSend className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </button>
               </form>
             </div>
           </motion.div>
 
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            variants={fadeInUp}
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Let's connect
               </h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                I'm always open to discussing new projects, creative ideas, or
+                opportunities to be part of your visions. Feel free to reach out!
               </p>
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.a
+            <div className="space-y-4">
+              {contactInfo.map((info) => (
+                <a
                   key={info.label}
                   href={info.href}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-center space-x-4 p-4 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-gray-700/20 hover:shadow-lg transition-all duration-300 group"
+                  className="card card-hover flex items-center gap-4 p-4"
                 >
-                  <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl text-white group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white">
                     <info.icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
                       {info.label}
                     </p>
-                    <p className="text-gray-900 dark:text-white font-semibold">
+                    <p className="font-medium text-gray-900 dark:text-white">
                       {info.value}
                     </p>
                   </div>
-                </motion.a>
+                </a>
               ))}
             </div>
 
             {/* Social Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-                Follow me on social media
+              <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+                Follow me
               </h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
+              <div className="flex gap-3">
+                {contactSocialLinks.map((social) => (
+                  <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`p-4 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-gray-700/20 text-gray-600 dark:text-gray-300 ${social.color} transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+                    className="p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 transition-all duration-200"
+                    aria-label={social.label}
                   >
-                    <social.icon className="w-6 h-6" />
-                  </motion.a>
+                    <social.icon className="w-5 h-5" />
+                  </a>
                 ))}
               </div>
             </div>
