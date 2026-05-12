@@ -1,53 +1,91 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class',
+module.exports = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './data/**/*.{js,ts}',
+  ],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
-        },
+        // Section backgrounds — alternating, NOT pure black
+        base:      '#0c0c11',
+        elevated:  '#111118',
+        card:      '#16161f',
+        'card-hover': '#1c1c27',
+
+        // Accent system
+        accent:    '#6366f1',
+        'accent-light': '#818cf8',
+        'accent-muted': 'rgba(99,102,241,0.12)',
+        'accent-border': 'rgba(99,102,241,0.25)',
+
+        // Secondary accent
+        sky:       '#38bdf8',
+
+        // Text hierarchy
+        'ink-1':   '#eeeef5',
+        'ink-2':   '#9191a8',
+        'ink-3':   '#55555e',
+
+        // Borders
+        'line':    'rgba(255,255,255,0.07)',
+        'line-strong': 'rgba(255,255,255,0.12)',
+
+        // Terminal specific
+        'term-bg': '#0a0a0f',
+        'term-prompt': '#6366f1',
+        'term-out':    '#9191a8',
+        'term-cmd':    '#eeeef5',
+        'term-err':    '#ef4444',
+        'term-accent': '#38bdf8',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'slide-up': 'slideUp 0.5s ease-out forwards',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', '"Fira Code"', 'Consolas', 'monospace'],
       },
       backgroundImage: {
+        'dot-grid': 'radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'dot-pattern':
-          "url(\"data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e5e7eb'/%3E%3C/svg%3E\")",
-        'dot-pattern-dark':
-          "url(\"data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%231f2937'/%3E%3C/svg%3E\")",
+        'card-shine': 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%)',
+      },
+      backgroundSize: {
+        'dot-grid': '28px 28px',
       },
       boxShadow: {
-        glow: '0 0 20px -5px rgba(59, 130, 246, 0.4)',
-        'glow-lg': '0 0 40px -10px rgba(59, 130, 246, 0.5)',
+        'card':    '0 1px 0 rgba(255,255,255,0.06) inset, 0 8px 32px rgba(0,0,0,0.4)',
+        'glow-sm': '0 0 24px rgba(99,102,241,0.25)',
+        'glow':    '0 0 48px rgba(99,102,241,0.35)',
+        'glow-up': '0 -20px 60px rgba(99,102,241,0.12)',
+      },
+      animation: {
+        'fade-up':    'fadeUp 0.55s cubic-bezier(0.16,1,0.3,1) forwards',
+        'fade-in':    'fadeIn 0.4s ease forwards',
+        blink:        'blink 1.1s step-end infinite',
+        'slide-down': 'slideDown 0.3s cubic-bezier(0.16,1,0.3,1) forwards',
+        shimmer:      'shimmer 2.4s linear infinite',
+      },
+      keyframes: {
+        fadeUp: {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to:   { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          from: { opacity: '0' },
+          to:   { opacity: '1' },
+        },
+        blink: {
+          '0%,100%': { opacity: '1' },
+          '50%':     { opacity: '0' },
+        },
+        slideDown: {
+          from: { opacity: '0', transform: 'translateY(-8px)' },
+          to:   { opacity: '1', transform: 'translateY(0)' },
+        },
+        shimmer: {
+          '0%':   { backgroundPosition: '-400% 0' },
+          '100%': { backgroundPosition: '400% 0' },
+        },
       },
     },
   },

@@ -11,6 +11,14 @@ node_modules
 dist
 dist-ssr
 *.local
+.next
+out
+
+# AI tooling — do not push
+.agents/
+.claude/
+skills-lock.json
+*.agents.json
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +30,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment
+.env
+.env.local
+.env.production

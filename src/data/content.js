@@ -25,6 +25,7 @@ import {
   FaPhp,
   FaLaravel,
   FaGitAlt,
+  
   FaGithub,
   FaBootstrap,
   FaWordpress,
