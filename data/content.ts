@@ -268,7 +268,7 @@ export const experiences = [
   },
   {
     role: 'Laravel Developer (Intern)',
-    org: 'Tech Xperts',
+    org: 'DriesTech',
     type: 'Internship',
     period: 'Aug 2024 – Oct 2024',
     location: 'Karachi, Pakistan',

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, Menu, X, LayoutGrid, Sun, Moon } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, X, LayoutGrid, Sun, Moon, Download } from 'lucide-react';
 
 const links = [
   { label: 'Skills',    href: '#skills'    },
@@ -135,6 +135,30 @@ export default function Navbar({ onSwitch }: Props) {
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--ink-2)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
             >
               <Linkedin size={15} />
+            </a>
+
+            {/* Resume button */}
+            <a
+              href="/Anas_Furqan_Resume.docx"
+              download
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150"
+              style={{
+                background: 'rgba(99,102,241,0.1)',
+                border: '1px solid rgba(99,102,241,0.3)',
+                color: '#a5b4fc',
+              }}
+              title="Download Resume"
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'rgba(99,102,241,0.2)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.5)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'rgba(99,102,241,0.1)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.3)';
+              }}
+            >
+              <Download size={13} />
+              Resume
             </a>
 
             {/* Theme toggle */}
