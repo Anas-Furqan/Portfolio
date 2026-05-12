@@ -280,7 +280,7 @@ export default function Hero() {
           style={{ borderTop: '1px solid var(--line)' }}
         >
           {[
-            { n: '3+',  l: 'Hackathons led' },
+            { n: '5+',  l: 'Hackathons Participated' },
             { n: '10+', l: 'Projects shipped' },
             { n: '100%', l: 'Merit scholarship' },
             { n: '2nd', l: 'BIEK Karachi' },
