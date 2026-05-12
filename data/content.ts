@@ -16,7 +16,7 @@ export const personalInfo = {
   github: 'https://github.com/Anas-Furqan',
   linkedin: 'https://www.linkedin.com/in/anas-furqan/',
   whatsapp: 'https://wa.me/+923174724801',
-  bio: `I build systems that move fast and scale. From real-time collaborative platforms with CRDT conflict resolution to Web3 applications with on-chain mechanics — I care deeply about the architecture behind the experience.`,
+  bio: `I build systems that move fast and scale. From real-time collaborative platforms with CRDT conflict resolution to AI-powered applications — I care deeply about the engineering behind the experience.`,
 };
 
 /* ════════════════════════════════════════

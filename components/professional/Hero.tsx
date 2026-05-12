@@ -39,13 +39,93 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16,1,0.3,1] } },
 };
 
+/* ── Floating tags config — positioned relative to photo area ── */
+const floatingTags = [
+  {
+    text: 'Merit Scholar',
+    color: '#34d399',
+    sub: 'FAST-NUCES',
+    style: { top: '4%', left: '-30%' },
+    anim: { y: [0, -8, 0], x: [0, 3, 0] },
+    duration: 4.5,
+    delay: 0,
+  },
+  {
+    text: '🏆 Hackathon Winner',
+    color: '#fbbf24',
+    sub: 'AI FEST · NED',
+    style: { top: '22%', right: '-26%' },
+    anim: { y: [0, 7, 0], x: [0, -3, 0] },
+    duration: 5.2,
+    delay: 0.7,
+  },
+  {
+    text: 'Board Topper',
+    color: '#818cf8',
+    sub: 'BIEK Karachi',
+    style: { bottom: '30%', left: '-32%' },
+    anim: { y: [0, 6, 0], x: [0, 4, 0] },
+    duration: 4.8,
+    delay: 1.2,
+  },
+  {
+    text: 'Hackathon Lead',
+    color: '#38bdf8',
+    sub: "DevDay · ACM NUCES",
+    style: { bottom: '10%', right: '-24%' },
+    anim: { y: [0, -6, 0], x: [0, -3, 0] },
+    duration: 4.2,
+    delay: 0.4,
+  },
+];
+
+interface FloatingTagProps {
+  text: string;
+  color: string;
+  sub: string;
+  style: React.CSSProperties;
+  anim: { y: number[]; x: number[] };
+  duration: number;
+  delay: number;
+}
+
+function FloatingTag({ text, color, sub, style, anim, duration, delay }: FloatingTagProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.85 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: delay + 0.6, duration: 0.5, ease: [0.16,1,0.3,1] }}
+      className="absolute"
+      style={style}
+    >
+      <motion.div
+        animate={anim}
+        transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay }}
+        className="card px-3 py-2.5 shadow-lg cursor-default select-none"
+        style={{
+          borderRadius: '12px',
+          minWidth: '130px',
+          boxShadow: `0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px ${color}20`,
+        }}
+      >
+        <p className="text-[11px] font-semibold leading-tight" style={{ color }}>
+          {text}
+        </p>
+        <p className="text-[10px] font-mono mt-0.5 leading-tight" style={{ color: 'var(--ink-3)' }}>
+          {sub}
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Hero() {
   const role = useTypewriter(roles);
 
   return (
     <section
       id="hero"
-      className="section-a relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: 'var(--bg-base)' }}
     >
       {/* Dot grid */}
@@ -56,20 +136,17 @@ export default function Hero() {
           backgroundSize: '28px 28px',
         }}
       />
-
-      {/* Top-right glow */}
+      {/* Corner glows */}
       <div className="absolute top-0 right-0 w-[700px] h-[500px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 100% 0%, rgba(99,102,241,0.12) 0%, transparent 60%)' }} />
-      {/* Bottom-left glow */}
       <div className="absolute bottom-0 left-0 w-[500px] h-[400px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(56,189,248,0.07) 0%, transparent 60%)' }} />
 
       <div className="wrap relative z-10 w-full pt-28 pb-20">
-        <div className="grid lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-14 xl:gap-24 items-center">
+        <div className="grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_450px] gap-14 xl:gap-20 items-center">
 
-          {/* ── Content ── */}
+          {/* ── Left: Content ── */}
           <motion.div variants={container} initial="hidden" animate="show">
-            {/* Status */}
             <motion.div variants={item} className="mb-7">
               <span className="tag tag-emerald">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -77,7 +154,6 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Name */}
             <motion.h1 variants={item} className="display mb-4">
               <span style={{ color: 'var(--ink-1)' }}>Anas</span>
               <br />
@@ -91,7 +167,7 @@ export default function Hero() {
               </span>
             </motion.h1>
 
-            {/* Typewriter */}
+            {/* Typewriter role */}
             <motion.div variants={item} className="flex items-center gap-2.5 mb-6 h-8">
               <Terminal size={15} style={{ color: 'var(--accent)', flexShrink: 0 }} />
               <span className="font-mono text-base" style={{ color: 'var(--accent-light)' }}>
@@ -111,20 +187,17 @@ export default function Hero() {
                 className="btn-primary"
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                View Work
-                <ArrowDown size={14} />
+                View Work <ArrowDown size={14} />
               </button>
               <a href={`mailto:${personalInfo.email}`} className="btn-ghost">
-                <Mail size={14} />
-                Get in Touch
+                <Mail size={14} /> Get in Touch
               </a>
             </motion.div>
 
-            {/* Location + socials */}
+            {/* Socials */}
             <motion.div variants={item} className="flex items-center gap-5">
               <span className="flex items-center gap-1.5 text-sm" style={{ color: 'var(--ink-3)' }}>
-                <MapPin size={12} />
-                {personalInfo.location}
+                <MapPin size={12} />{personalInfo.location}
               </span>
               <div className="flex items-center gap-1.5">
                 {[
@@ -132,9 +205,7 @@ export default function Hero() {
                   { href: personalInfo.linkedin, Icon: Linkedin, label: 'LinkedIn' },
                   { href: `mailto:${personalInfo.email}`, Icon: Mail, label: 'Email' },
                 ].map(({ href, Icon, label }) => (
-                  <a
-                    key={label}
-                    href={href}
+                  <a key={label} href={href}
                     target={label !== 'Email' ? '_blank' : undefined}
                     rel="noreferrer"
                     className="w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-150"
@@ -155,40 +226,28 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── Profile image ── */}
+          {/* ── Right: Profile + floating tags ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 12 }}
+            initial={{ opacity: 0, scale: 0.92, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.7, ease: [0.16,1,0.3,1] }}
+            transition={{ delay: 0.5, duration: 0.7, ease: [0.16,1,0.3,1] }}
             className="relative hidden lg:flex justify-center items-center"
           >
-            {/* Glow behind */}
+            {/* Glow */}
             <div className="absolute inset-8 rounded-3xl"
-              style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.2) 0%, transparent 70%)' }} />
+              style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.18) 0%, transparent 70%)' }} />
 
-            {/* Gradient border frame */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            {/* Photo with gradient border */}
+            <div
               className="relative"
               style={{
                 padding: '2px',
                 borderRadius: '24px',
-                background: 'linear-gradient(140deg, rgba(99,102,241,0.6) 0%, rgba(56,189,248,0.4) 50%, rgba(99,102,241,0.3) 100%)',
+                background: 'linear-gradient(140deg, rgba(99,102,241,0.65) 0%, rgba(56,189,248,0.45) 50%, rgba(99,102,241,0.35) 100%)',
               }}
             >
-              {/* Pulse ring */}
               <div
-                className="absolute -inset-2 rounded-[28px] pointer-events-none"
-                style={{
-                  background: 'transparent',
-                  border: '1px solid rgba(99,102,241,0.18)',
-                  animation: 'pulse-ring 3s ease-in-out infinite',
-                }}
-              />
-
-              <div
-                className="relative w-[340px] h-[400px] rounded-[22px] overflow-hidden"
+                className="relative w-[330px] h-[390px] rounded-[22px] overflow-hidden"
                 style={{ background: 'var(--bg-card)' }}
               >
                 <Image
@@ -197,34 +256,18 @@ export default function Hero() {
                   fill
                   className="object-cover object-top"
                   priority
-                  sizes="340px"
+                  sizes="330px"
                 />
-                {/* Bottom fade */}
+                {/* Bottom fade overlay */}
                 <div className="absolute bottom-0 inset-x-0 h-20"
                   style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 100%)' }} />
               </div>
-            </motion.div>
+            </div>
 
-            {/* Floating badges */}
-            <motion.div
-              animate={{ y: [0, -7, 0] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -left-8 top-8 card px-3 py-2.5 shadow-lg"
-              style={{ borderRadius: '12px', minWidth: '120px' }}
-            >
-              <p className="text-xs font-semibold" style={{ color: 'var(--accent-light)' }}>Hackathon Lead</p>
-              <p className="text-[10px] mt-0.5" style={{ color: 'var(--ink-3)' }}>ACM NUCES · DevDay</p>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 7, 0] }}
-              transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-              className="absolute -right-6 bottom-14 card px-3 py-2.5 shadow-lg"
-              style={{ borderRadius: '12px' }}
-            >
-              <p className="text-xs font-semibold" style={{ color: '#38bdf8' }}>AI FEST Winner 🏆</p>
-              <p className="text-[10px] mt-0.5" style={{ color: 'var(--ink-3)' }}>NED University</p>
-            </motion.div>
+            {/* Floating tags — positioned around photo */}
+            {floatingTags.map((tag) => (
+              <FloatingTag key={tag.text} {...tag} />
+            ))}
           </motion.div>
         </div>
 
@@ -233,18 +276,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.5 }}
-          className="flex flex-wrap items-center gap-8 mt-16 pt-8"
+          className="flex flex-wrap items-center gap-10 mt-16 pt-8"
           style={{ borderTop: '1px solid var(--line)' }}
         >
           {[
             { n: '3+',  l: 'Hackathons led' },
             { n: '10+', l: 'Projects shipped' },
-            { n: '100%',l: 'Merit scholarship' },
+            { n: '100%', l: 'Merit scholarship' },
             { n: '2nd', l: 'BIEK Karachi' },
           ].map(s => (
             <div key={s.l}>
               <div className="text-xl font-bold" style={{ color: 'var(--ink-1)' }}>{s.n}</div>
-              <div className="text-xs mt-0.5" style={{ color: 'var(--ink-3)' }}>{s.l}</div>
+              <div className="text-xs mt-0.5 font-mono" style={{ color: 'var(--ink-3)' }}>{s.l}</div>
             </div>
           ))}
         </motion.div>

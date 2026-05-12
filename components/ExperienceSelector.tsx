@@ -38,7 +38,7 @@ export default function ExperienceSelector({ onSelect }: Props) {
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center p-5"
-      style={{ background: '#0c0c11' }}
+      style={{ background: 'var(--bg-base)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35 }}

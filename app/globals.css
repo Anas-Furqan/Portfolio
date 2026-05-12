@@ -147,7 +147,7 @@ body {
   border-radius: 16px;
   position: relative;
   overflow: hidden;
-  transition: background-color 0.35s ease, border-color 0.35s ease;
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .card::before {
@@ -157,26 +157,35 @@ body {
   background: var(--card-shine);
   pointer-events: none;
   border-radius: inherit;
+  z-index: 0;
 }
 
+.card > * { position: relative; z-index: 1; }
+
 .card-hover {
+  cursor: pointer;
   transition: transform 0.22s cubic-bezier(0.16,1,0.3,1),
               border-color 0.22s ease,
               box-shadow 0.22s ease,
               background-color 0.35s ease;
 }
 
-[data-theme="dark"] .card-hover:hover,
-:root:not([data-theme="light"]) .card-hover:hover {
+.card-hover:hover {
   transform: translateY(-3px);
-  border-color: rgba(99,102,241,0.25);
+  border-color: rgba(99,102,241,0.28);
+}
+
+:root:not([data-theme="light"]) .card-hover:hover {
   box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(99,102,241,0.14);
 }
 
 [data-theme="light"] .card-hover:hover {
-  transform: translateY(-3px);
-  border-color: rgba(99,102,241,0.2);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.09), 0 0 0 1px rgba(99,102,241,0.15);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Light mode card shadow */
+[data-theme="light"] .card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.04) inset;
 }
 
 /* ════════════════════════════════════════
@@ -291,15 +300,27 @@ body {
 ════════════════════════════════════════ */
 
 .glass-panel {
-  background: rgba(17,17,24,0.94);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: rgba(14,14,20,0.95);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(255,255,255,0.1);
+  color: var(--ink-1);
 }
 
 [data-theme="light"] .glass-panel {
-  background: rgba(255,255,255,0.96);
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+
+/* Light mode — fix colors inside glass panels */
+[data-theme="light"] .glass-panel h2,
+[data-theme="light"] .glass-panel h3,
+[data-theme="light"] .glass-panel p,
+[data-theme="light"] .glass-panel span {
+  color: inherit;
 }
 
 /* ════════════════════════════════════════
@@ -358,6 +379,37 @@ body {
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+/* ════════════════════════════════════════
+   LIGHT MODE OVERRIDES
+════════════════════════════════════════ */
+
+/* Chip in light mode — more visible */
+[data-theme="light"] .chip {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.1);
+  color: var(--ink-2);
+}
+[data-theme="light"] .chip:hover {
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.2);
+  color: var(--accent);
+}
+
+/* Tag colors in light mode */
+[data-theme="light"] .btn-ghost {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.1);
+}
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(0,0,0,0.07);
+  border-color: rgba(0,0,0,0.15);
+}
+
+/* Section divider in light mode */
+[data-theme="light"] .section-divider {
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.1) 80%, transparent);
 }
 
 /* ════════════════════════════════════════
