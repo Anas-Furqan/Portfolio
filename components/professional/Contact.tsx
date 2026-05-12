@@ -6,9 +6,9 @@ import { Mail, Github, Linkedin, MessageCircle, Copy, Check, ArrowUpRight } from
 import { personalInfo } from '@/data/content';
 
 const socials = [
-  { label: 'GitHub',    handle: '@Anas-Furqan',       href: personalInfo.github,   icon: Github,        accent: '#eeeef5' },
-  { label: 'LinkedIn',  handle: '/in/anas-furqan',    href: personalInfo.linkedin, icon: Linkedin,      accent: '#0a66c2' },
-  { label: 'WhatsApp',  handle: '+92 317 4724801',    href: personalInfo.whatsapp, icon: MessageCircle, accent: '#25d366' },
+  { label: 'GitHub',   handle: '@Anas-Furqan',    href: personalInfo.github,   icon: Github,        accent: '#eeeef5' },
+  { label: 'LinkedIn', handle: '/in/anas-furqan', href: personalInfo.linkedin, icon: Linkedin,      accent: '#0a66c2' },
+  { label: 'WhatsApp', handle: '+92 317 4724801', href: personalInfo.whatsapp, icon: MessageCircle, accent: '#25d366' },
 ];
 
 export default function Contact() {
@@ -23,9 +23,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" ref={ref} className="section-b section-pad relative overflow-hidden">
+    <section id="contact" ref={ref} className="section-pad relative overflow-hidden"
+      style={{ background: 'var(--bg-elevated)' }}>
       {/* Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[280px] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.1) 0%, transparent 70%)' }} />
 
       <div className="wrap relative z-10">
@@ -39,13 +40,13 @@ export default function Contact() {
           <p className="label mb-3">Contact</p>
           <h2 className="heading mb-4">Let&apos;s build something</h2>
           <p className="subheading max-w-sm mx-auto text-base">
-            Open to interesting roles, hackathon collabs, and backend / full-stack opportunities.
+            Open to interesting roles, hackathon collabs, and full-stack opportunities.
           </p>
         </motion.div>
 
         {/* Email block */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1, duration: 0.55, ease: [0.16,1,0.3,1] }}
           className="max-w-md mx-auto mb-8"
@@ -58,8 +59,8 @@ export default function Contact() {
                 <Mail size={15} style={{ color: '#818cf8' }} />
               </div>
               <div>
-                <p className="text-[11px] font-mono text-ink-3 mb-0.5">Email</p>
-                <p className="text-sm font-medium text-ink-1">{personalInfo.email}</p>
+                <p className="text-[11px] font-mono mb-0.5" style={{ color: 'var(--ink-3)' }}>Email</p>
+                <p className="text-sm font-medium" style={{ color: 'var(--ink-1)' }}>{personalInfo.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
@@ -67,28 +68,22 @@ export default function Contact() {
                 onClick={copy}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all duration-150"
                 style={{
-                  background: copied ? 'rgba(52,211,153,0.12)' : 'rgba(255,255,255,0.05)',
-                  border: `1px solid ${copied ? 'rgba(52,211,153,0.25)' : 'rgba(255,255,255,0.08)'}`,
-                  color: copied ? '#34d399' : '#9191a8',
+                  background: copied ? 'rgba(52,211,153,0.12)' : 'var(--surface)',
+                  border: `1px solid ${copied ? 'rgba(52,211,153,0.25)' : 'var(--line)'}`,
+                  color: copied ? '#34d399' : 'var(--ink-2)',
                 }}
               >
                 {copied ? <><Check size={11} />Copied</> : <><Copy size={11} />Copy</>}
               </button>
               <a href={`mailto:${personalInfo.email}`} className="btn-primary text-xs py-1.5 px-3">
-                Send
-                <ArrowUpRight size={11} />
+                Send <ArrowUpRight size={11} />
               </a>
             </div>
           </div>
         </motion.div>
 
         {/* Social grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="grid sm:grid-cols-3 gap-3 max-w-xl mx-auto"
-        >
+        <div className="grid sm:grid-cols-3 gap-3 max-w-xl mx-auto">
           {socials.map((s, i) => {
             const Icon = s.icon;
             return (
@@ -97,23 +92,23 @@ export default function Contact() {
                 href={s.href}
                 target="_blank"
                 rel="noreferrer"
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.25 + i * 0.07, duration: 0.5 }}
+                transition={{ delay: 0.2 + i * 0.07, duration: 0.5 }}
                 className="card card-hover flex flex-col items-center gap-2.5 p-5 text-center"
               >
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)' }}>
-                  <Icon size={16} className="text-ink-2" />
+                  style={{ background: 'var(--surface)', border: '1px solid var(--line)' }}>
+                  <Icon size={16} style={{ color: 'var(--ink-2)' }} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-ink-1">{s.label}</p>
-                  <p className="text-[11px] font-mono text-ink-3 mt-0.5">{s.handle}</p>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--ink-1)' }}>{s.label}</p>
+                  <p className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--ink-3)' }}>{s.handle}</p>
                 </div>
               </motion.a>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* Footer */}
         <motion.div
@@ -121,17 +116,19 @@ export default function Contact() {
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.45 }}
           className="text-center mt-16 pt-8"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+          style={{ borderTop: '1px solid var(--line)' }}
         >
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold"
               style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.25)', color: '#a5b4fc' }}>
               AF
             </div>
-            <span className="text-sm font-semibold text-ink-1">Anas Furqan</span>
+            <span className="text-sm font-semibold" style={{ color: 'var(--ink-1)' }}>Anas Furqan</span>
           </div>
-          <p className="text-xs font-mono text-ink-3">Next.js · Framer Motion · Tailwind CSS</p>
-          <p className="text-xs font-mono text-ink-3 mt-1">Karachi, Pakistan · {new Date().getFullYear()}</p>
+          <p className="text-xs font-mono" style={{ color: 'var(--ink-3)' }}>Next.js · Framer Motion · Tailwind CSS</p>
+          <p className="text-xs font-mono mt-1" style={{ color: 'var(--ink-3)' }}>
+            Karachi, Pakistan · {new Date().getFullYear()}
+          </p>
         </motion.div>
       </div>
     </section>

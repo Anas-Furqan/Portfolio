@@ -19,11 +19,10 @@ export default function Skills() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-8%' });
   const [active, setActive] = useState<string | null>(null);
-
   const displayed = active ? [active] : allCats;
 
   return (
-    <section id="skills" ref={ref} className="section-b section-pad">
+    <section id="skills" ref={ref} className="section-pad" style={{ background: 'var(--bg-elevated)' }}>
       <div className="wrap">
         {/* Header */}
         <motion.div
@@ -35,18 +34,20 @@ export default function Skills() {
           <div>
             <p className="label mb-3">Tech Stack</p>
             <h2 className="heading">What I build with</h2>
-            <p className="text-sm text-ink-2 mt-2">Real technologies from production projects — no filler.</p>
+            <p className="text-sm mt-2" style={{ color: 'var(--ink-2)' }}>
+              Real technologies from production projects — no filler.
+            </p>
           </div>
 
-          {/* Filter tabs */}
+          {/* Category filters */}
           <div className="flex flex-wrap gap-1.5">
             <button
               onClick={() => setActive(null)}
               className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150"
               style={{
-                background: active === null ? 'rgba(99,102,241,0.15)' : 'rgba(255,255,255,0.04)',
-                border: `1px solid ${active === null ? 'rgba(99,102,241,0.35)' : 'rgba(255,255,255,0.08)'}`,
-                color: active === null ? '#a5b4fc' : '#9191a8',
+                background: active === null ? 'rgba(99,102,241,0.15)' : 'var(--surface)',
+                border: `1px solid ${active === null ? 'rgba(99,102,241,0.35)' : 'var(--line)'}`,
+                color: active === null ? '#a5b4fc' : 'var(--ink-2)',
               }}
             >
               All
@@ -60,9 +61,9 @@ export default function Skills() {
                   onClick={() => setActive(isActive ? null : cat)}
                   className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150"
                   style={{
-                    background: isActive ? m.bg : 'rgba(255,255,255,0.04)',
-                    border: `1px solid ${isActive ? m.border : 'rgba(255,255,255,0.08)'}`,
-                    color: isActive ? m.color : '#9191a8',
+                    background: isActive ? m.bg : 'var(--surface)',
+                    border: `1px solid ${isActive ? m.border : 'var(--line)'}`,
+                    color: isActive ? m.color : 'var(--ink-2)',
                   }}
                 >
                   {cat}
@@ -72,11 +73,8 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        {/* Category grid */}
-        <motion.div
-          layout
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
+        {/* Grid */}
+        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {displayed.map((cat, ci) => {
             const m = categoryMeta[cat] ?? categoryMeta.Frontend;
             const items = techStack[cat as keyof typeof techStack] ?? [];
@@ -84,29 +82,21 @@ export default function Skills() {
               <motion.div
                 key={cat}
                 layout
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 22 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: ci * 0.06, duration: 0.5, ease: [0.16,1,0.3,1] }}
                 className="card p-5"
               >
-                {/* Category header */}
                 <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-1.5 h-6 rounded-full" style={{ background: m.color }} />
-                  <span className="text-xs font-mono font-semibold tracking-widest uppercase" style={{ color: m.color }}>
+                  <div className="w-1.5 h-5 rounded-full" style={{ background: m.color }} />
+                  <span className="text-xs font-mono font-semibold tracking-widest uppercase"
+                    style={{ color: m.color }}>
                     {cat}
                   </span>
                 </div>
-
-                {/* Chips */}
                 <div className="flex flex-wrap gap-1.5">
                   {items.map(item => (
-                    <span
-                      key={item.name}
-                      className="chip"
-                      style={{ cursor: 'default' }}
-                    >
-                      {item.name}
-                    </span>
+                    <span key={item.name} className="chip cursor-default">{item.name}</span>
                   ))}
                 </div>
               </motion.div>
@@ -114,12 +104,12 @@ export default function Skills() {
           })}
         </motion.div>
 
-        {/* Footer note */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
-          className="text-center text-xs font-mono text-ink-3 mt-8"
+          className="text-center text-xs font-mono mt-8"
+          style={{ color: 'var(--ink-3)' }}
         >
           Extracted from production repos — not a wishlist
         </motion.p>

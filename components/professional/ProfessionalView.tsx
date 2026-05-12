@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Navbar from '../Navbar';
 import Hero from './Hero';
 import Skills from './Skills';
@@ -20,7 +20,7 @@ export default function ProfessionalView({ onSwitch }: Props) {
   }, []);
 
   return (
-    <div style={{ background: '#0c0c11' }}>
+    <div style={{ background: 'var(--bg-base)', color: 'var(--ink-1)', minHeight: '100vh' }}>
       <Navbar onSwitch={onSwitch} />
       <main>
         <Hero />

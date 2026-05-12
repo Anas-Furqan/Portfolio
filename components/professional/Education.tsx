@@ -16,7 +16,7 @@ export default function Education() {
   const inView = useInView(ref, { once: true, margin: '-8%' });
 
   return (
-    <section id="education" ref={ref} className="section-a section-pad">
+    <section id="education" ref={ref} className="section-pad" style={{ background: 'var(--bg-base)' }}>
       <div className="wrap">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -31,12 +31,12 @@ export default function Education() {
         <div className="grid lg:grid-cols-[3fr_2fr] gap-10">
           {/* ── Experience timeline ── */}
           <div>
-            <p className="text-xs font-mono text-ink-3 uppercase tracking-widest mb-7">Experience & Leadership</p>
+            <p className="text-xs font-mono uppercase tracking-widest mb-7" style={{ color: 'var(--ink-3)' }}>
+              Leadership & Work
+            </p>
             <div className="relative">
-              {/* Timeline rail */}
               <div className="absolute left-[13px] top-0 bottom-8 w-px hidden md:block"
-                style={{ background: 'linear-gradient(to bottom, rgba(99,102,241,0.4), rgba(99,102,241,0.05))' }} />
-
+                style={{ background: 'linear-gradient(to bottom, rgba(99,102,241,0.4), rgba(99,102,241,0.04))' }} />
               <div className="space-y-4">
                 {experiences.map((exp, i) => {
                   const Icon = expTypeIcon[exp.type] ?? Briefcase;
@@ -48,23 +48,27 @@ export default function Education() {
                       transition={{ delay: i * 0.07, duration: 0.5, ease: [0.16,1,0.3,1] }}
                       className="flex gap-4"
                     >
-                      {/* Dot */}
+                      {/* Timeline dot */}
                       <div className="relative hidden md:flex flex-col items-center flex-shrink-0 pt-0.5">
                         <div className="w-7 h-7 rounded-full flex items-center justify-center z-10"
                           style={{
-                            background: exp.current ? `${exp.color}18` : 'rgba(255,255,255,0.04)',
-                            border: `1px solid ${exp.current ? exp.color + '45' : 'rgba(255,255,255,0.08)'}`,
+                            background: exp.current ? `${exp.color}18` : 'var(--surface)',
+                            border: `1px solid ${exp.current ? exp.color + '45' : 'var(--line)'}`,
                           }}>
                           <Icon size={12} style={{ color: exp.color }} />
                         </div>
                       </div>
 
                       {/* Card */}
-                      <div className="flex-1 card p-4 transition-all duration-250 hover:border-white/12">
+                      <div className="flex-1 card p-5 transition-all duration-200"
+                        style={{ cursor: 'default' }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--line-strong)'; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--line)'; }}
+                      >
                         <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                           <div>
-                            <p className="text-sm font-semibold text-ink-1">{exp.role}</p>
-                            <p className="text-xs font-medium mt-0.5" style={{ color: exp.color }}>{exp.org}</p>
+                            <p className="text-sm font-semibold" style={{ color: 'var(--ink-1)' }}>{exp.role}</p>
+                            <p className="text-xs font-medium mt-0.5 font-mono" style={{ color: exp.color }}>{exp.org}</p>
                           </div>
                           <div className="flex flex-col items-end gap-1.5">
                             <span className="text-[11px] font-mono px-2 py-0.5 rounded-md"
@@ -83,16 +87,18 @@ export default function Education() {
                             )}
                           </div>
                         </div>
+
                         <div className="flex items-center gap-3 mb-2.5">
-                          <span className="text-xs font-mono text-ink-3">{exp.period}</span>
-                          <span className="text-ink-3">·</span>
-                          <span className="flex items-center gap-1 text-xs text-ink-3">
+                          <span className="text-xs font-mono" style={{ color: 'var(--ink-3)' }}>{exp.period}</span>
+                          <span style={{ color: 'var(--ink-3)' }}>·</span>
+                          <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--ink-3)' }}>
                             <MapPin size={10} />{exp.location}
                           </span>
                         </div>
+
                         <ul className="space-y-1">
                           {exp.points.map((p, j) => (
-                            <li key={j} className="flex items-start gap-2 text-xs text-ink-2">
+                            <li key={j} className="flex items-start gap-2 text-xs" style={{ color: 'var(--ink-2)' }}>
                               <span className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: exp.color }} />
                               {p}
                             </li>
@@ -106,9 +112,11 @@ export default function Education() {
             </div>
           </div>
 
-          {/* ── Education ── */}
+          {/* ── Education cards ── */}
           <div>
-            <p className="text-xs font-mono text-ink-3 uppercase tracking-widest mb-7">Education</p>
+            <p className="text-xs font-mono uppercase tracking-widest mb-7" style={{ color: 'var(--ink-3)' }}>
+              Education
+            </p>
             <div className="space-y-3">
               {education.map((edu, i) => (
                 <motion.div
@@ -120,20 +128,20 @@ export default function Education() {
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div>
-                      <p className="text-sm font-semibold text-ink-1 leading-snug">{edu.degree}</p>
-                      <p className="text-xs mt-0.5 font-mono" style={{ color: edu.color }}>{edu.institution}</p>
+                      <p className="text-sm font-semibold leading-snug" style={{ color: 'var(--ink-1)' }}>{edu.degree}</p>
+                      <p className="text-xs font-mono mt-0.5" style={{ color: edu.color }}>{edu.institution}</p>
                     </div>
                     <span className="text-[11px] font-mono px-2 py-0.5 rounded-md flex-shrink-0"
                       style={{
-                        background: edu.status === 'In Progress' ? 'rgba(52,211,153,0.1)' : 'rgba(255,255,255,0.05)',
-                        border: edu.status === 'In Progress' ? '1px solid rgba(52,211,153,0.2)' : '1px solid rgba(255,255,255,0.07)',
-                        color: edu.status === 'In Progress' ? '#34d399' : '#9191a8',
+                        background: edu.status === 'In Progress' ? 'rgba(52,211,153,0.1)' : 'var(--surface)',
+                        border: edu.status === 'In Progress' ? '1px solid rgba(52,211,153,0.2)' : '1px solid var(--line)',
+                        color: edu.status === 'In Progress' ? '#34d399' : 'var(--ink-3)',
                       }}>
                       {edu.status}
                     </span>
                   </div>
-                  <p className="text-xs font-mono text-ink-3 mb-2">{edu.period}</p>
-                  {edu.note && <p className="text-xs text-ink-2 leading-relaxed">{edu.note}</p>}
+                  <p className="text-xs font-mono mb-1.5" style={{ color: 'var(--ink-3)' }}>{edu.period}</p>
+                  {edu.note && <p className="text-xs leading-relaxed" style={{ color: 'var(--ink-2)' }}>{edu.note}</p>}
                 </motion.div>
               ))}
             </div>

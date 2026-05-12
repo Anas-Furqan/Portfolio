@@ -25,7 +25,7 @@ import {
   FaPhp,
   FaLaravel,
   FaGitAlt,
-  
+
   FaGithub,
   FaBootstrap,
   FaWordpress,
@@ -371,6 +371,7 @@ export const projects = [
   {
     title: 'Plant Nest',
     description:
+    
       'A Laravel-powered eCommerce platform dedicated to selling plants and related accessories with seamless experience.',
     tech: ['PHP', 'Laravel', 'Bootstrap', 'HTML', 'CSS', 'JavaScript', 'MySQL'],
     image: '/projects/plantnest.PNG',
